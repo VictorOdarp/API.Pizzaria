@@ -12,8 +12,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
 var DefaultConnection = "server=localhost;userid=root;password=895smigol;database=APIPizzaria;";
 
 builder.Services.AddDbContext<DarpinosDbContext>(options =>
@@ -22,6 +20,10 @@ builder.Services.AddDbContext<DarpinosDbContext>(options =>
 });
 
 builder.Services.AddScoped<DarpinosDbContext>();
+builder.Services.AddScoped<IPizzaInterface, PizzaService>();
+builder.Services.AddScoped<IBebidaInterface, BebidaService>();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

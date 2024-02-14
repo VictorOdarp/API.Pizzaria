@@ -5,6 +5,7 @@ namespace APIPizzaria.Data
 {
     public class DarpinosDbContext : DbContext
     {
+
         public DarpinosDbContext(DbContextOptions<DarpinosDbContext> options) : base(options)
         {
 

@@ -1,6 +1,7 @@
 ﻿using APIPizzaria.Data;
 using APIPizzaria.Interface;
 using APIPizzaria.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIPizzaria.Services
 {
@@ -11,30 +12,177 @@ namespace APIPizzaria.Services
         public PizzaService(DarpinosDbContext context)
         {
             _context = context;
-        }  
-        public Task<List<PizzaService>> CreateBebida(PizzaModel novaPizza)
-        {
-            throw new NotImplementedException();
         }
 
-        public Task<List<PizzaService>> DeleteBebida(int id)
+
+
+        public async Task<ServiceResponse<List<PizzaModel>>> GetAllPizza()
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
+
+            try
+            {
+                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+
+                if (serviceResponse.Dados.Count == 0)
+                {
+                    serviceResponse.Mensagem = "Nenhum dado encontrado!";
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
         }
 
-        public Task<List<PizzaService>> GetAllBebidas()
+        public async Task<ServiceResponse<PizzaModel>> GetPizzaById(int id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<PizzaModel> serviceResponse = new ServiceResponse<PizzaModel>();
+
+            try
+            {
+                PizzaModel pizza = await _context.Pizza.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (id == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Nenhum dado encontrado";
+                    serviceResponse.Status = false;
+                }
+
+                serviceResponse.Dados = pizza;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
         }
 
-        public Task<PizzaService> GetBebidaById(int id)
+
+        public async Task<ServiceResponse<List<PizzaModel>>> CreatePizza(PizzaModel novaPizza)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
+
+            try
+            {
+                if (novaPizza == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Informar dados!";
+                    serviceResponse.Status = false;
+                }
+
+                _context.Add(novaPizza);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
         }
 
-        public Task<List<PizzaService>> UpdateBebida(PizzaModel updatePizza)
+        public async Task<ServiceResponse<List<PizzaModel>>> UpdatePizza(PizzaModel updatePizza)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
+
+            try
+            {
+                PizzaModel pizza = await _context.Pizza.FirstOrDefaultAsync(x => x.Id == updatePizza.Id);
+
+                if (updatePizza == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Usuário não encontrado!";
+                    serviceResponse.Status = false;
+                }
+
+                _context.Update(pizza);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
+
+
+        }
+
+        public async Task<ServiceResponse<List<PizzaModel>>> DeletePizza(int id)
+        {
+            ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
+
+            try
+            {
+                PizzaModel pizza = _context.Pizza.FirstOrDefault(x => x.Id == id);
+
+                if (id == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Usuário não encontrado!";
+                    serviceResponse.Status = false;
+                }
+
+                _context.Remove(pizza);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<PizzaModel>>> InativaPizza(int id)
+        {
+            ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
+
+            try
+            {
+                PizzaModel pizza = await _context.Pizza.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (pizza == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Usuário não encontrado!";
+                    serviceResponse.Status = false;
+                }
+
+                pizza.Preço = 0.0;
+
+                _context.Update(pizza);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Status = false;
+            }
+
+            return serviceResponse;
         }
     }
 }

@@ -5,10 +5,10 @@ namespace APIPizzaria.Interface
 {
     public interface IBebidaInterface
     {
-        Task<List<BebidaService>> GetAllBebidas();
-        Task<List<BebidaService>> CreateBebida(BebidaModel novaBebida);
-        Task<BebidaService> GetBebidaById(int id);
-        Task<List<BebidaService>> UpdateBebida(BebidaModel updateBebida);
-        Task<List<BebidaService>> DeleteBebida(int id);
+        Task<ServiceResponse<List<BebidaModel>>> GetAllBebidas();
+        Task<ServiceResponse<List<BebidaModel>>> CreateBebida(BebidaModel novaBebida);
+        Task<ServiceResponse<BebidaModel>> GetBebidaById(int id);
+        Task<ServiceResponse<List<BebidaModel>>> UpdateBebida(BebidaModel updateBebida);
+        Task<ServiceResponse<List<BebidaModel>>> DeleteBebida(int id);
     }
 }

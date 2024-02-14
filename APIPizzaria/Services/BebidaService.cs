@@ -12,27 +12,28 @@ namespace APIPizzaria.Services
         {
             _context = context;
         }
-        public Task<List<BebidaService>> CreateBebida(BebidaModel novaBebida)
+
+        public Task<ServiceResponse<List<BebidaModel>>> CreateBebida(BebidaModel novaBebida)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<BebidaService>> DeleteBebida(int id)
+        public Task<ServiceResponse<List<BebidaModel>>> DeleteBebida(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<BebidaService>> GetAllBebidas()
+        public Task<ServiceResponse<List<BebidaModel>>> GetAllBebidas()
         {
             throw new NotImplementedException();
         }
 
-        public Task<BebidaService> GetBebidaById(int id)
+        public Task<ServiceResponse<BebidaModel>> GetBebidaById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<BebidaService>> UpdateBebida(BebidaModel updateBebida)
+        public Task<ServiceResponse<List<BebidaModel>>> UpdateBebida(BebidaModel updateBebida)
         {
             throw new NotImplementedException();
         }
