@@ -41,21 +41,21 @@ namespace APIPizzaria.Controllers
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<PizzaModel>>>> UpdatePizza(PizzaModel pizzaeditada)
         {
-            var upPizza = _pizzaInterface.UpdatePizza(pizzaeditada);
+            var upPizza = await _pizzaInterface.UpdatePizza(pizzaeditada);
             return Ok(upPizza);
         }
 
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<List<PizzaModel>>>> DeletePizza(int id)
         {
-            var delPizza = _pizzaInterface.DeletePizza(id);
+            var delPizza = await  _pizzaInterface.DeletePizza(id);
             return Ok(delPizza);
         }
 
         [HttpPut("InativaPizza")]
         public async Task<ActionResult<ServiceResponse<List<PizzaModel>>>> InativaPizza(int id)
         {
-            var InativaPizza = _pizzaInterface.InativaPizza(id);
+            var InativaPizza = await _pizzaInterface.InativaPizza(id);
             return Ok(InativaPizza);
         }
     }

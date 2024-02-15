@@ -12,16 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IPizzaInterface, PizzaService>();
+builder.Services.AddScoped<IBebidaInterface, BebidaService>();
+
 var DefaultConnection = "server=localhost;userid=root;password=895smigol;database=APIPizzaria;";
 
 builder.Services.AddDbContext<DarpinosDbContext>(options =>
 {
     options.UseMySql(DefaultConnection, ServerVersion.AutoDetect(DefaultConnection));
 });
-
-builder.Services.AddScoped<DarpinosDbContext>();
-builder.Services.AddScoped<IPizzaInterface, PizzaService>();
-builder.Services.AddScoped<IBebidaInterface, BebidaService>();
 
 var app = builder.Build();
 

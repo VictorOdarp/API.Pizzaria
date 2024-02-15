@@ -98,7 +98,7 @@ namespace APIPizzaria.Services
 
             try
             {
-                PizzaModel pizza = await _context.Pizza.FirstOrDefaultAsync(x => x.Id == updatePizza.Id);
+                PizzaModel pizza = await _context.Pizza.AsNoTracking().FirstOrDefaultAsync(x => x.Id == updatePizza.Id);
 
                 if (updatePizza == null)
                 {
@@ -107,7 +107,7 @@ namespace APIPizzaria.Services
                     serviceResponse.Status = false;
                 }
 
-                _context.Update(pizza);
+                _context.Pizza.Update(updatePizza);
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Dados = await _context.Pizza.ToListAsync();
@@ -139,10 +139,10 @@ namespace APIPizzaria.Services
                     serviceResponse.Status = false;
                 }
 
-                _context.Remove(pizza);
+                _context.Pizza.Remove(pizza);
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Dados = await _context.Pizza.ToListAsync();
+                serviceResponse.Dados = await _context.Pizza.OrderBy(x => x.Id).ToListAsync();
 
             }
             catch (Exception ex)
@@ -171,7 +171,7 @@ namespace APIPizzaria.Services
 
                 pizza.Preço = 0.0;
 
-                _context.Update(pizza);
+                _context.Pizza.Update(pizza);
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Dados = await _context.Pizza.ToListAsync();
