@@ -10,5 +10,7 @@ namespace APIPizzaria.Interface
         Task<ServiceResponse<BebidaModel>> GetBebidaById(int id);
         Task<ServiceResponse<List<BebidaModel>>> UpdateBebida(BebidaModel updateBebida);
         Task<ServiceResponse<List<BebidaModel>>> DeleteBebida(int id);
+        Task<ServiceResponse<List<BebidaModel>>> InativaBebida(int id);
+
     }
 }

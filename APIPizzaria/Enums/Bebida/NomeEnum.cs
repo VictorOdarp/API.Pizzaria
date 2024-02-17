@@ -8,7 +8,7 @@ namespace APIPizzaria.Enums.Bebida
         CocaCola, 
         Sprite,
         Sukita,
-        Pepsi
+        Pepsi,
 
     }
 }

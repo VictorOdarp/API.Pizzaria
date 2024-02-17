@@ -9,7 +9,7 @@ namespace APIPizzaria.Enums.Pizza
         ChocolateBranco,
         DoisAmores,
         Catupiry,
-        Cheedar
+        Cheedar,
 
     }
 }

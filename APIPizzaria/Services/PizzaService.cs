@@ -14,8 +14,6 @@ namespace APIPizzaria.Services
             _context = context;
         }
 
-
-
         public async Task<ServiceResponse<List<PizzaModel>>> GetAllPizza()
         {
             ServiceResponse<List<PizzaModel>> serviceResponse = new ServiceResponse<List<PizzaModel>>();
@@ -130,7 +128,7 @@ namespace APIPizzaria.Services
 
             try
             {
-                PizzaModel pizza = _context.Pizza.FirstOrDefault(x => x.Id == id);
+                PizzaModel pizza = await _context.Pizza.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (id == null)
                 {
